@@ -3,7 +3,7 @@ title: Perguntas frequêntes
 
 toc_footers:
   - <a href='/Checkout-Cielo/'>Integração com Checkout Cielo</a>
-  - <a href='Checkout-Orientacoes-Gerais/'>Orientações Gerais</a>
+  - <a href='/Checkout-Orientacoes-Gerais/'>Orientações Gerais</a>
   - <a href='/Checkout-Backoffice/'>Backoffice Cielo</a>
 
 search: true
