@@ -11,75 +11,64 @@ search: true
 
 # Perguntas frequentes
 
-## Dúvidas técnicas
+## Qual a diferença entre o tipo de Integração usada no CHECKOUT CIELO?
 
-### Aonde eu cadastro meus produtos?
+O CHECKOUT CIELO utiliza integração via POST e é possível configurá-la de duas formas:
 
-A inclusão dos produtos é feita dentro do Backoffice, no menu de Produtos/Cadastrar Produto.
+* **Integração via Carrinho de Compras** - usada quando houver um “carrinho de compras” a ser enviado, ou seja, no caso do consumidor navegar pelo site e escolher 1 ou mais produtos para adicionar a um carrinho e depois finalizar a transação.
+* **Integração via Botão** - usada sempre que não houver um “carrinho de compras” em sua loja ou quando se deseja associar uma compra rápida/direta a um produto. Cada produto cadastrado gera um “botão de compra” único que permite personalização. Exemplo: um hotsite uma promoção que leva o comprador diretamente para a etapa de pagamento (página do Checkout Cielo).
 
-### Existe limite de produtos a serem cadastrados no CHECKOUT CIELO?
+## Como eu crio o Botão?
 
-Não, você pode cadastrar quantos produtos desejar.
+O Botão é criado no momento de inclusão de um novo produto. Para isso, acesse o [Backoffice Checkout Cielo](/Checkout-Backoffice/), no menu Produtos/Cadastrar Produtos.
 
-### É necessario cadastrar todos os meus produtos no CHECKOUT CIELO para que eu possa transacionar?
+## Quais informações eu preciso para montar o POST?
 
-Não, o cadastro de produtos é opcional. Ele é realizado para a criação de um “botão”, que pode ser utilizado para a venda de um produto especifico.
+Os dados a serem preenchidos no POST são:
 
-### Quais informações eu preciso para montar o Post?
+* Dados do Pedido
+* Carrinho de Compras
+* Dados de Frete
+* Dados do Consumidor
 
-Os dados a serem preenchidos no post se referem basicamente a 4 grupos:
+Todas as informações para auxiliar nesse processo, encontram-se no Manual de Integração Checkout Cielo.
 
-1. Dados do Pedido
-2. Carrinho de Compras
-3. Dados de Frete
-4. Dados do Consumidor.
+## Posso enviar um e-mail marketing como forma de cobrança?
 
-Todas as informações para auxiliar nesse processo, encontram-se no manual de desenvolvimento.
+Sim, por meio da Integração via Botão é possível enviar um e-mail marketing, ou uma cobrança por e-mail, adicionando ao HTML do e-mail, o botão referente ao produto/serviço ofertado.
 
-### Posso enviar um e-mail como forma de cobrança?
+## Para que serve a URL de retorno?
 
-Sim, através da integração via botão você pode usar para enviar um e-mail marketing, ou uma cobrança por e-mail, adicionando ao HTML do e-mail, o botão referente ao produto/serviço sendo comprado/pago. Ou sempre que se desejar disponibilizar uma transação rápida sem desenvolvimento algum.
+Ao finalizar a compra, o consumidor tem a opção de voltar ao site do lojista ou ser direcionado para a página que o lojista desejar.  A função dessas URL é conduzir automaticamente o consumidor para a página definida nesta opção.
 
-### O comprador precisa ser cliente do CHECKOUT CIELO para fechar a transação?
+## Para que serve a URL de Notificação?
 
-Não. A solução de checkout é simples e não exige que o cliente esteja logado ou se cadastre. No entanto todas as informações solicitadas para fechar a compra são salvas no pedido. E o lojista terá acesso a todas elas.
+Ao finalizar uma transação, é enviado um POST com todos os dados da venda para a URL de Notificação, previamente cadastrada no BackOffice. O POST de notificação é enviado apenas no momento que a transação é finalizada, independentemente se houver alteração do status da transação.
 
-### Para que serve a URL de retorno?
+Dessa maneira os dados do pedido ficam atualizados no [Backoffice Checkout Cielo](/Checkout-Backoffice/) e também no backoffice da loja/plataforma.
 
-Para que ao finalizar a compra, o consumidor final tenha a opção de voltar ao site do lojista. O Consumidor é redirecionado automaticamente a pagina definida nesta opção.
+## Para que serve a URL de Mudança de Status?
 
-### Para que serve a URL de Notificação?
+Ela define para onde será enviado o POST indicando a alteração de status de uma transação, ou seja, quando um pedido tiver seu status alterado, será enviando um POST para a URL de Mudança de Status, previamente cadastrada no BackOffice. O POST de mudança de status não contém dados do carrinho, apenas dados de identificação do pedido.
 
-Ao finalizar a compra é enviando um post contendo informações sobre a transação. A utilização dessa URL é indicada para clientes que entregam através de uma Plataforma de E-commerce. Dessa maneira os dados do pedido ficam atualizados no Backoffice do CHECKOUT CIELO e no Backoffice junto a Plataforma.
+## Onde é feito o cadastro dessas URLs?
 
-### Para que serve a URL de Notificação?
+No [Backoffice Checkout Cielo](/Checkout-Backoffice/), no menu Configurações/Configurações da loja.
 
-Ao finalizar a compra é enviando um post contendo informações sobre a transação. A utilização dessa URL é indicada para clientes que entregam através de uma Plataforma de E-commerce. Dessa maneira os dados do pedido ficam atualizados no Backoffice do CHECKOUT CIELO e no Backoffice junto a Plataforma.
+## Qual a diferença entre o  Erro OPSSS antes e depois da exibição da tela do Checkout Cielo?
 
-### Onde é feito o cadastro dessas URLs?
+* **Antes da exibição da tela de Checkout** - significa que houve algum dado errado no envio da transação. Dados obrigatórios podem estar faltando ou o formato é invalido. Aqui o lojista sempre vai receber um e-mail informando o motivo do erro.
+    * Para esses, é exibido um código (os mesmos dos manuais) dentro do pedido no Backoffice Checkout Cielo.
+* **Depois da Exibição da tela de Checkout (quando a venda é finalizada)** - significa que há algum impedimento de cadastro que limita a venda. Coisas como afiliação bloqueada, erro nos dados salvos no cadastro ou até problemas no próprio checkout.
 
-No seu backoffice, aba configurações -> configurações da loja.
+## Qual a relação entre os tipos de produtos e os tipos de fretes?
 
-### Posso dar desconto ao meu cliente?
+O tipo de produto a ser vendido no Checkout Cielo influencia diretamente o tipo de frete e a informação a ser enviada para o processamento da transação.
 
-Sim. É possível enviar um parâmetro com o valor ou a Porcentagem (%) do desconto a ser oferecido naquela transação. Esse parametro é valido para todos os meios de pagamento, não sendo aplicado a meios especificos e o desconto é sobre o valor total da transação.
+O tipo de frete a ser utilizado dependerá do tipo de produto que a sua loja comercializa. No Checkout Cielo você pode comercializar 3 tipos de produtos:
 
-Tambem é possivel definir um valor de desconto para pagamento com Debito online ou boleto, ambos podendo ser enviados via Post ou definidos no Backoffice. O desconto de boleto/débito pode ser acumulado ao desconto total.
-
-### Como são os Posts para lojas que utilizam carrinhos?
-
-O tipo de post a ser utilizado em sua loja dependerá do produto e de como esse é comercializado na sua loja.
-
-Os Posts serão formados por parametros que devem ser enviados a URL, `https://cieloecommmerce.cielo.com.br/transactional/order/index`, onde serão processados. Veja a seção [Integração](#integraco) dessa documentação para mais informações.
-
-<aside class="notice">É importante entender que apesar de alguns parametros descritos no manual de integração não serem obrigatorios para um determinado produto, isso não significa que eles não serão obrigatorios a outros tipos.</aside>
-
-### Qual a relação entre os tipos de produtos e os tipos de fretes?
-
-O tipo de produto a ser vendido no CHECKOUT CIELO influencia diretamente qual o tipo de frete e a informação a ser enviada para o processamento da transação. O tipo de frete a ser utilizado dependerá do tipo de produto que a sua loja comercializa. No CHECKOUT CIELO você pode comercializar 3 tipos de produtos:
-
-* Bens Fisicos
-* Bens digitais
+* Material Físico
+* Bens Digitais
 * Serviços
 
 Os tipos de frete que podem ser usados são:
@@ -88,199 +77,41 @@ Os tipos de frete que podem ser usados são:
 * Frete Fixo
 * Frete Grátis
 * Sem Frete (Retirada em mãos)
-* Sem cobrança de frete (Usada para bens Digitais ou Serviços)
+* Sem cobrança de frete (usado para Bens Digitais ou Serviços)
 
-Se Produtos do tipo “Bens fisicos” necessitam de algum tipo de frete para serem enviados, obrigatoriamente será preciso a inclusão de informações como do peso do produto, Cep de origem e Cep de entrega, para o calculo do frete. Veja a seção [Integração](#integraco) dessa documentação para mais informações.
+Produtos (categoria Material Físico) necessitam da habilitação de algum tipo de frete para serem enviados. Nesse caso, é obrigatória a inclusão de informações como do peso do produto (CART_1_WEIGHT), CEP de origem (CART_1_ZIPCODE) e CEP de entrega (SHIPPING_ZIPCODE), para o cálculo do frete.
 
-<aside class="notice">Diferentemente, “Bens digitais” ou “Serviços” não necessitam desse tipo de informação.</aside>
+As categorias “Bens digitais” ou “Serviços” não necessitam desse tipo de informação.
 
-## Dúvidas comerciais
+Para compreender a diferença entre os parâmetros do POST em relação a frete e tipos de produtos, compare os exemplos de post abaixo. Para mais informações, acesse o [Manual de Integração Checkout Cielo](/Checkout-Cielo/).
 
-### Quais são os meios de pagamento disponíveis no CHECKOUT CIELO?
+### Parâmetros obrigatórios
 
-Cartões de Crédito (Bandeiras: Visa, Mastercard, Diners, Amex e Elo), Boleto Bancário
-e Débito Online (Banco do Brasil e Bradesco).
+|Material físico|Bens Digitais / Serviço|
+|---------------|----------------|
+|`MERCHANT_ID`|`MERCHANT_ID`|
+|`ORDER_NUMBER`|`ORDER_NUMBER`|
+|`SHIPPING_TYPE`: 1, 2 ou 3|`SHIPPING_TYPE`: 5|
+|`SOFT_DESCRIPTOR|SOFT_DESCRIPTOR|
+|`CART_1_NAME`|`CART_1_NAME`|
+|`CART_1_UNITPRICE`|`CART_1_UNITPRICE`|
+|`CART_1_QUANTITY`|`CART_1_QUANTITY`|
+|`CART_1_WEIGHT`|`CART_1_TYPE`: 2 ou 3 **(Obrigatorio)**|
+|`CART_1_ZIPCODE`|`CART_1_TYPE`: 1 **(Obrigatorio)**|
+|`CUSTOMER_NAME`|`CUSTOMER_IDENTITY`|
+|`SHIPPING_1_NAME`|`CUSTOMER_EMAIL`|
+|`SHIPPING_1_PRICE`|`CUSTOMER_PHONE`|
 
-### Quais são as diferenças entre o CHECKOUT CIELO e os Facilitadores de Pagamento, como Pagseguro e Paypal?
+## O que é o modo de teste CHECKOUT CIELO?
 
-* Não intermediamos o dinheiro referente a suas transações. Isso significa que o lojista vende com suas afiliações. Seu dinheiro será depositado diretamente na sua conta corrente pela Cielo.
-* Controle sobre os recebimentos. O lojista negocia diretamente com Cielo se deseja antecipar seus recebíveis
-* Possibilidade de capturar transações imediatamente. O lojista decide se captura manualmente ou libera a captura automatica para transações de baixo risco.
-* O lojista decide para quem quer vender com apoio de ferramenta antifraude. O Lojista decide se assume o risco informado (“Baixo, Moderado ou Alto”) em relação a um pedido, capturando ou cancelando a transação (conclui a transação ou não).
+É um ambiente de testes, onde é possível simular todas as ações sem precisar alterar sua integração. É um ambiente de teste onde é possível simular vendas e outras ações de teste (como cancelamentos, capturas e chargebacks).
 
-### É preciso ter contas nos bancos para adquirir as afiliações de boleto e Débito?
+## Como é ativado o modo de teste Checkout Cielo?
 
-Sim. Para maiores informações sobre esse processo entre em contato com [cieloecommerce@cielo.com.br](mailto:cieloecommerce@cielo.com.br).
+No Backoffice Cielo Checkout, aba Configurações Pagamentos Modo de Teste é possível habilitar ou desabilitado o Modo de teste. Quando esse modo estiver ativo, uma grande faixa vermelha será exibida na parte superior de todas as telas do Checkout Cielo (Backoffice Checkout e Tela de pagamento).
 
-O CHECKOUT CIELO não gera boletos para cooperativas de crédito, mesmo que estas sejam vinculadas aos bancos utilizados.
+No Modo de teste o lojista ou desenvolvedor pode realizar testes de transações e de integração.
 
-### Quando o valor da transações é depositado em minha conta corrente?
+## O modo de teste tem algum custo adicional?
 
-O valor transacionado será depositado em sua conta corrente de acordo com os prazos estabelecidos em cada meio de pagamento. Para maiores informações sugerimos que entre em contato direto com cada meio que a sua loja utiliza.
-
-### É possivel realizar parcelamentos no CHECKOUT CIELO?
-
-Sim, o CHECKOUT CIELO pode parcelar compras com cartão de crédito em até 12x. As parcelas do CHECKOUT CIELO não incluem juros, sendo uma divisão do valor comprado pelo prazo do pagamento.
-
-<aside class="notice">O numero maximo de parcelas é definido na afiliação da loja. Caso a sua afiliação tenha liberado 6x na afiliação e 12X no CHECKOUT CIELO, a transação não será autorizada. A alteração do numero maximo de parcelas da afiliação pode ser realizada diretamente com a Cielo.</aside>
-
-### Saio do ambiente da minha loja durante a transação?
-
-Sim, quando o comprador decidir realizar o checkout ele será redirecionado para a tela do CHECKOUT CIELO. Nessa tela segura, o comprador irá inserir os dados do meio de pagamento e o meio de entrega/frete (caso a loja permita) de sua preferencia.
-
-### O CHECKOUT CIELO detém informações sobre prazo de entrega do produto?
-
-Não , o CHECKOUT CIELO tem acesso somente a informações da transação de pagamento. Caso um cliente do lojista CHECKOUT CIELO entre em contato com duvidas a respeito do prazo de entrega ou solicitações a respeito do mesmo assunto, será sugerido a ele que entre em contato com a loja responsavel pela venda.
-
-A equipe CHECKOUT CIELO não fornece os dados de contato do Lojista ao comprador em hipótese alguma.
-
-## Dúvidas operacionais
-
-### Quando esquecer a senha de acesso ao Backoffice, como proceder?
-
-1. Acesse o site do backoffice, e clique em “Esqueci Minha Senha”
-2. Preencha com o e-mail cadastrado. Um e-mail para redefinição de senha será enviado.
-
-### Não consigo visualizar o pedido no backoffice, como resolver?
-
-Primeiramente, verifique se na integração foi utilizado o MID correto. MID é o Merchant_Id de sua loja, e deve ser utilizado na integração com CHECKOUT CIELO, coforme o Manual de Desenvolvimento.
-
-### O que devo fazer quando o pedido estiver com o status “Autorizado”?
-
-Deverá conferir o status do antifraude e decidir por capturar (aceitar) ou cancelar a transação. Ressaltamos que o risco e a responsabilidade sempre serão do lojista caso venha a sofrer uma fraude e/ou um chargeback.
-
-### Durante quanto tempo o pedido pode permanecer com o status “Autorizado”?
-
-O pedido poderá ficar “Autorizado” por 5 dias corridos, após esse prazo não pode mais ser capturado junto a operadora de cartão de crédito/adquirente (Cielo). Recomendamos que Capture ou Cancele o pedido o quanto antes, agilizando a entrega da mercadoria ou liberando o limite de crédito do seu cliente.
-
-### Qual é a diferença entre os status “Autorizado” e “Pago” em um pedido de cartão de
-crédito?
-
-* **Autorizado** – o valor da transação fica reservado no limite do cartão do cliente, aguardando a captura (efetivação do pagamento) ou o cancelamento ( o retorno do limite ao cliente). Significa que a transação ainda NÃO foi concluída.
-* **Pago** – o valor foi efetivado e será cobrado na fatura do cliente. Significa que a transação foi concluída 
-
-<aside class="warning">ATENÇÃO, para pedidos feitos com cartão de crédito o status “Pago” não significa que o dinheiro estará disponível na sua conta corrente imediatamente. A operadora de cartão de crédito (Cielo) efetiva o depósito dos valores referente à suas transações 30 dias após a captura. É possível receber antes dos 30 dias negociando diretamente com a Cielo ou com o seu banco a (Antecipação de recebíveis de cartão de crédito).</aside>
-
-### O que devo fazer quando o pedido estiver com o status “Expirado”?
-
-* Para pedidos com Cartão de Crédito, não será possível capturar a transação. O pedido foi automaticamente cancelado pela operadora de cartão de crédito/adquirente (Cielo).
-* Para pedidos com Boleto Bancário, é necessário consultar no seu extrato bancário se valor foi creditado e alterar o status para PAGO.
-
-### O que acontece se eu não alterar os status dos meus boletos que foram pagos?
-
-Não haverá nenhum impacto em suas vendas, porém a visão da sua operação nos relatórios e gráficos do Dashboard ficará prejudicada por não refletir exatamente o status de sua operação.
-
-### O que significa o status “Pendente” para cartões de crédito?
-
-Significa que não foi repassada até o momento nenhuma resposta do Banco ou da Cielo.
-Os pedidos serão sondados juntos as operadoras de cartão de crédito/Adquirentes, e seu status atualizado.
-
-### Quais os possíveis status em cada meio de pagamento?
-
-* **Cartão de Crédito**:
-   * **Não Finalizado** - Falha de conexão no processamento da transação é possível recuperar a transação solicitando que o cliente refaça a transação.
-   * **Pendente** - Status intermediário.
-   * **Autorizado** - Quando um pedido foi aprovado e está pendente de captura. É necessário Capturar ou Cancelar a transação conforme a analise de risco.
-   * **Não Autorizado** - pedido não foi aprovado pela Cielo/Banco Emissor Pago - status após a Captura manual ou automática da transação.
-   * **Cancelado** - Quando é solicitado um cancelamento junto a operadora de cartão de crédito/adquirente.
-   * **Chargeback** - Quando o comprador solicita o estorno junto ao banco emissor, o lojista pode utilizar esse status para seu controle.
-   * **Expirado** - Não foi Capturado ou cancelado no prazo de 5 dias.
-* **Boleto Bancário**:
-   * **Pendente** - Aguardando pagamento
-   * **Não Finalizado** - Falha de conexão no processamento da transação é possível recuperar a transação solicitando que o cliente refaça a transação.
-   * **Expirado** - Não foi alterado o status no prazo de 5 dias após a data de vencimento, se o pagamento for confirmado no seu extrato bancário é possível alterar o status da transação para PAGO.
-   * **Pago** - Confirmação de Pagamento após verificação no seu extrato bancário
-* **Débito Online**:
-   *  **Não Autorizado** - pedido não aprovado pelo banco.
-   *  **Pago** - Pedido confirmado pelo banco, valor debitado da conta do comprador.
-   *  **Não Finalizado** - Falha de conexão no processamento da transação. É necessário solicitar ao cliente que refaça a transação.
-   *  **Pendente** - Status intermediário.
-
-### Cliquei errado no botão “Cancelar”. Perdi a transação?
-
-Sim, a transação foi cancelada junto a Cielo. Não sendo possível desfazer um cancelamento.
-
-### Qual a diferença de Cancelamento e Estorno?
-
-* **Cancelamento** - é feito no mesmo dia da captura, devolvendo o limite ao cartão do comprador em até 72h conforme regras do banco emissor do cartão.
-* **Estorno** - a partir do dia seguinte da captura, o valor é “devolvido” na fatura do comprador em até 120 dias.
-
-<aside class="warning">ATENÇÃO, o cancelamento e o estorno são realizamos através do “botão” cancelar. Seguindo as regras acima.</aside>
-
-### Quanto tempo depois da transação eu posso efetuar um estorno?
-
-Você tem até 120 dias após a data de captura do pedido.
-
-### É possivel definir um valor minimo de parcelamento?
-
-Sim, na aba configurações do CHECKOUT CIELO é possivel definir o valor minimo que uma parcela pode atingir. Dessa maneira, o valor da parcela não será inferior a um valor idal ao lojista.
-
-### É possivel definir um valor minimo de boleto?
-
-Sim, é possivel definir um valor minimo para que o boleto seja disponibilizado. Para maiores informações acesse BackOffice -> Manuais -> Tutorial do lojista.
-
-### É possivel dar um desconto para o uso de boleto ou meio de pagamento?
-
-Sim, é possivel definir um valor de desconto para que o boleto seja disponibilizado. Isso pode ser feito de duas maneiras: Backoffice ou via API de integração - descrita na seção [Integração](integraco).
-
-### O que é antifraude? E para que serve?
-
-“Anti-Fraudes” são ferramentas de Análise e Avaliação de Risco. Essas ferramentas verificam e apontam a possibilidade de uma transação incorrer em fraude, protegendo o empreendedor virtual de eventuais golpes.
-
-Ao vender pela internet não existe a possibilidade de utilizar a segurança dos dispositivos físicos do cartão tais como o chip e a tarja magnética e por isso os lojistas virtuais são alvos constantes de tentativas de fraude.
-
-Diante desse cenário, surgiram no mercado ferramentas específicas que buscam combater e inibir tais iniciativas, ou seja, os “anti-fraudes”.
-
-Todas as transações de cartão de crédito autorizadas na Cielo no CHECKOUT CIELO são
-processadas no antifraude Decision Manager da Cybersource.
-
-### Para capturar minhas transações, necessito entrar no Backoffice
-
-Depende. Caso deseje visualizar o status de cada transação e acompanhar pessoalmente o processo de venda, você pode mantar a captura manual.
-
-Caso, prefira que o processo de captura seja automatizado, há na aba configurações opções de captura e rejeição de pedidos automaticamente.
-
-### Qual a diferença de Captuta Automática e Captura Manual?
-
-* **Captura Automática** – a decisão da venda é feita automaticamente após analise de fraude. Onde todos os pedidos autorizados e com “Baixo Risco” serão marcados como PAGO.
-* **Captura Manual** – a decisão de venda é feita manualmente pelo lojista no backoffice. Analisando a resposta do antifraude.
-
-### O que devo fazer quando o status do antifraude estiver como “Baixo Risco” e a minha captura é manual?
-
-Recomendamos que capture o pedido e conclua a transação. Lembrando que não existe risco zero em transações online pois os mecanismos de segurança, tais como tarja magnética, chip e senhas não funcionam para transações online.
-
-### O que devo fazer quando o status do antifraude estiver como “Alto Risco” e a minha captura é manual?
-
-Neste caso recomendamos o cancelamento da autorização, porém você ainda pode optar por fazer uma análise manual do pedido e decidir por capturar a autorização e concluir a transação ignorando a orientação do antifraude e assumindo o risco.
-
-### O que é um Chargeback?
-
-Chargeback é o cancelamento feito pelo comprador de uma transação realizada com cartão de crédito. Que pode acontecer por dois motivos:
-
-1. O não reconhecimento da compra por parte do titular do cartão
-2. Ou a transação não obedecer às regras previstas entre o comprador e o lojista.
-
-Caso um ChargeBack ocorra, o lojista não recebe o valor da compra ou seja, caso seja uma fraude, o fraudador, pode realizar uma compra com dados falsos.
-
-### Quais a opções de frete eu posso utilizar?
-
-* Correios
-* Frete Fixo
-* Frete Grátis
-* Sem Frete (Retirada em mãos)
-* Sem cobrança de frete (Usada para bens Digitais ou Serviços)
-
-### Para utilizar o frete dos Correios o que eu devo fazer?
-
-* Se você tem um contrato com o correio basta cadastrar seu usuário e senha no menu Configurações -> Configurações de loja do seu Backoffice.
-* Se não tiver contrato, será necessario inserir CEP de origem, o CEP de destino e o peso do produto, calculando o frete do produto a ser enviado.
-
-### Como o comprador final escolhe o frete?
-
-O frete é escolhido na tela de finalização de compra, onde serão exibidas as opções cadastradas pelo vendedor.
-
-<aside class="notice">OBS: O lojista tambem tem a opção de calcular o valor do frete dentro de sua loja.</aside>
-
-### Como o valor do frete é repassado ao lojista?
-
-O frete é incluso no valor da transação (valor do pedido + frete = Valor da transação).
+Não, para utiliza-lo não há taxas. O modo de teste é disponibilizado no momento da liberação da sua conta.
